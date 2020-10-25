@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nice.hyunjoon.dao.SubwayDao">
+
+    <select id="truncateSubway" parameterType="com.nice.hyunjoon.dto.Subway">
+        truncate table subway
+    </select>
+
+    <update id="insertSubway" parameterType="com.nice.hyunjoon.dto.Subway">
+        insert into subway(s_name, s_line, month, amount)
+		values(#{name},#{line},#{month},#{amount})
+    </update>
+    
+    <select id="dailyAvgSubway" parameterType="INTEGER" resultType="hashmap">
+        SELECT top #{rowCount, mode=IN, jdbcType=INTEGER}
+        	s_name, ROUND(sum(amount) / 365, 1) AS amount
+		FROM subway
+		GROUP BY s_name
+		ORDER BY 2 desc
+    </select>
+    
+    <select id="MonthlyAvgSubway" parameterType="INTEGER" resultType="hashmap">
+        SELECT top #{rowCount, mode=IN, jdbcType=INTEGER}
+        	s_name, ROUND(avg(amount), 1) AS amount
+		FROM subway
+		GROUP BY s_name
+		ORDER BY 2
+    </select>
+    
+    <select id="MonthlyDiffSubway" parameterType="INTEGER" resultType="hashmap">
+        SELECT top #{rowCount, mode=IN, jdbcType=INTEGER}
+        	s_name, max(amount) - min(amount) AS amount
+		FROM subway
+		GROUP BY s_name
+		ORDER BY 2 desc
+    </select>
+
+</mapper>

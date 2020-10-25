@@ -1,0 +1,1 @@
+CREATE TABLE  subway ( s_name varchar(100) NOT NULL, month int(2) NOT NULL, s_line varchar(10) NOT NULL, amount int(9) NOT NULL, PRIMARY KEY (s_name, month) );
