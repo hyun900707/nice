@@ -29,6 +29,7 @@ gradlew bootRun
 >|-----------|------------------|
 >| file=[String] (default=data.csv) 입수대상 파일명 | code=[String] 상태코드(0:정상, 1:파일입수오류, 2:파일오류 등) |
 >|  | status=[String] 상태코드명(sucess, Not Found File, Invalid File 등) |
+>|  | data=[List] (count(Decimal):저장 Row) |
 ```
 {"code":"0","data":{"Count":2592},"status":"sucess"}
 ```
