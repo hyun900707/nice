@@ -13,7 +13,7 @@
     
     <select id="dailyAvgSubway" parameterType="INTEGER" resultType="hashmap">
         SELECT top #{rowCount, mode=IN, jdbcType=INTEGER}
-        	s_name, ROUND(sum(amount) / 365, 1) AS amount
+        	s_name, ROUND(sum(amount) / 365, 0) AS amount
 		FROM subway
 		GROUP BY s_name
 		ORDER BY 2 desc
@@ -21,7 +21,7 @@
     
     <select id="MonthlyAvgSubway" parameterType="INTEGER" resultType="hashmap">
         SELECT top #{rowCount, mode=IN, jdbcType=INTEGER}
-        	s_name, ROUND(avg(amount), 1) AS amount
+        	s_name, ROUND(avg(amount), 0) AS amount
 		FROM subway
 		GROUP BY s_name
 		ORDER BY 2

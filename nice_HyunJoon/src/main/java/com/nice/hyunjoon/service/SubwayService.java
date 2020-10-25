@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface SubwayService {
-	public int getCsvFileData(String file) throws IOException, Exception;
+	public HashMap<String, Object> getCsvFileData(String file) throws IOException, Exception;
 
 	public List<HashMap<String, Object>> api1(int rowCount);
 

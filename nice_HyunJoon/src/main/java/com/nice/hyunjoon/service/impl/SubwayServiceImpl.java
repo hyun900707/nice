@@ -34,8 +34,9 @@ public class SubwayServiceImpl implements SubwayService{
 	 * @throws Exception
 	 */
 	@Override
-	public int getCsvFileData(String file) throws IOException, Exception {
-		List<Subway> result = new ArrayList<>();
+	public HashMap<String, Object> getCsvFileData(String file) throws IOException, Exception {
+		HashMap<String, Object> result = new HashMap<>();
+		List<Subway> subway = new ArrayList<>();
 		
 		CSVReader reader = new CSVReader(new InputStreamReader(
                 this.getClass().getResourceAsStream("/data/" + file), "euc-kr"));
@@ -49,7 +50,7 @@ public class SubwayServiceImpl implements SubwayService{
 		// Pivot 데이터 정규화하여 DB화
 		while ((nextLine = reader.readNext()) != null) {
 			for (int i = LOOP_START; i < MONTH_INDEX; i++) {
-				result.add(Subway.builder()
+				subway.add(Subway.builder()
 						.line(nextLine[0])
 						.name(nextLine[2])
 						.month(i - LOOP_START + 1)
@@ -61,10 +62,11 @@ public class SubwayServiceImpl implements SubwayService{
 		// Parsing 성공시 DB화
 		subwayDao.truncateSubway(); // 과거데이터 삭제
 
-		result.forEach(item -> subwayDao.insertSubway(item));
+		subway.forEach(item -> subwayDao.insertSubway(item));
 		
+		result.put("Count",subway.size());
 
-		return result.size();
+		return result;
 	}
 
 	/**
